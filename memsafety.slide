@@ -1,1 +1,67 @@
-Foo test.
+Why rust is better than go?
+Memory safety in go, what we can learn from mistakes made by C++ and what rust did right?
+
+15 Oct 2016
+
+Tags: memory, race conditions
+
+Pawel Palucki
+pawel.palucki@gmail.com
+
+* Problem
+
+
+Tests with rece detector enabled... ok
+
+Meanwhile in production...
+```
+panic occured 
+```
+
+* How to happen
+
+evolution on man  image
+
+assembly: DRY
+jmp/ret
+
+modularity:
+    functions/structures/objects 
+parallel/concurency:
+    processes
+    threads
+    co(go)routines
+
+* Make your code more modular (structured design)
+
+Subroutines
+
+* Concurrency
+
+* Example for simple iteratore channel based
+
+* Hidden enemy
+
+* passing a pointer is giving an ownership
+* of what read vs write
+* signle reader 
+
+example with giving a file a closing it,
+openning a process and closed stdin
+
+
+* memory model in golang
+
+https://golang.org/ref/mem
+memory models:
+
+http://www.bailis.org/blog/linearizability-versus-serializability/
+https://aphyr.com/posts/313-strong-consistency-models
+
+
+* rust ownership/references/borrwoing/lifetimes
+
+http://softwaremaniacs.org/blog/2016/02/12/ownership-borrowing-hard/en/
+https://medium.com/@bugaevc/understanding-rust-ownership-borrowing-lifetimes-ff9ee9f79a9c#.tf40scbe7
+https://chrismorgan.info/blog/rust-ownership-the-hard-way.html
+
