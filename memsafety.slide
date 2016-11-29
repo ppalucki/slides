@@ -38,9 +38,36 @@ Subroutines
 
 * Concurrency
 
+"Go enables simple, safe concurrent programming. 
+It doesn't forbid bad programming.
+Caveat: not purely memory safe; sharing is legal. 
+Passing a pointer over a channel is idiomatic.
+Experience shows this is practical."
+Russ Cox
+
+https://talks.golang.org/2013/distsys.slide#32
+
+
 * Example for simple iteratore channel based
 
 * Hidden enemy
+
+"Design does not need to include "ownership".
+https://talks.golang.org/2015/simplicity-is-complicated.slide#20
+
+* Reference types
+interfaces
+functions
+slices
+maps
+
+https://groups.google.com/forum/#!topic/golang-nuts/xQUsmdo6oSs
+
+"Slices, Maps, and Channels are reference types."
+
+Interfaces values ???
+
+
 
 * passing a pointer is giving an ownership
 * of what read vs write
