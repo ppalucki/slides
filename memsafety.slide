@@ -1,94 +1,707 @@
-Why rust is better than go?
-Memory safety in go, what we can learn from mistakes made by C++ and what rust did right?
+What can we learn from rust writing go? 
+Concurrent design vs memory safety.
 
-15 Oct 2016
-
-Tags: memory, race conditions
+20 Oct 2016
+Tags: memory safety, race conditions
 
 Pawel Palucki
+Programming addict
 pawel.palucki@gmail.com
 
-* Problem
+* Agenda
+
+- Me and why go?
+- Betrayal
+- Rust to the rescue ?
+- Acceptance
+
+* Questions
+
+.image images/nostupidquestions.jpeg 500 _
+
+: prosze zadawac pytania,
+: ale nie nagrywac/rejestrowac etc,
+: nie to jeszcze nie koniec,
+: co najwyzej glupi prezentujacy,
+: jesli bede znal odpowiedz, odpowiem 
+: jesli nie, powtorze pytania, podkresle jak "bardzo dobre jest to pytanie", 
+: co bedzie sygnalem dla was, ze mozecie mnie poratowac
+: ewentualnie przy piwie, po fakcie po startem sie pomoc
+
+* About me
+
+- ~10 years professional programmer
+: Uzalezniony ;)
+- Java -> Python -> Ruby(Rails) -> Go
+: Perfekcyjny kandydat wg. googla :)
+- Enterprise -> WebDeveloper -> Backend -> Engineer
+
+: Prezentacja 
+: - Always behind the scene and on the edge
+: Krotko o mnie, 10 lat w branzy, zaczynalem w enterprise Java/Oracle dla ksiegowych + administrator,
+: Nastepnie web/backend developer social networking, przewaznie django ale praktycznie bez prezentacji ipla, nastepnie dwa lata, railsy (nie ruby) :),
+: Przez caly ten czas, zazwyczaj wieczorami lub w weekendy devops i admin naprawiajcy wszystko co napisalem nichlujnie w dzien. 
+: Najlepiej uczyc sie na bledach, niestety moglem duzo sie uczyc - gdy zostalem tech leadem - po 2 latach nie dalem rady i ucieklem do trojmiasto i teraz
+
+: O mommentu gdy przyszedlem Intelu, czas probuje odpowiedziec na pytania co poszlo nie tak, ze nie  moglem pracowac patrzec na twor w ktory wlozylem tyle serca,
+: Moze to ja zawiodlem, moze to jezyk, moze to ludzie.
+: Nadazyla sie okazja, trafilem do intela, do OpenStacka i po pol roku wiedzielame, ze to nie ja :)
+: To ludzie i jezyk :)
+: Wiec zaczalem pisac w go.
+
+* My rules
+
+- Keep it simple
+- Less is more
+- Perfection, not when there is nothing more to add, but when there is nothing left to take away.
+- Simplicity is the ultimate sophistication
+- Simplicity is not simple: hard to design, hard to build - easy to use?
+
+: jakim zasadamy kieruje sie tworzac nowe rzeczy - zazwyczaj oprogrwamowanie,
+: Osiagniecie i chwala dla tego, ktory wprowadzajac nowa funkcjolanosci, zredukje zlonosci, zazwyczaj ilosc kodu, lepiej skompliwkowanie
+: troche o byciu lewniwym,
+: robic mniej,
+: nigdy nie chwal sie ilosc kodu,
+: wcale nie takie proste jak sie wydaje,
+
+* Complexity is dangerous
+
+.image images/complexity2.jpeg
+
+"Catastrophe is always just around the corner"
+
+.link http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf How Complex Systems Fail. 
+
+: Tym sie kieruje, ale ciezko utrzymac sie w ryzach.
+: Ta prezentacja i present tool - mialo byc kilka slidow, jest pelno obrazkow i interaktywny kod
+: Jak powstrzymac glod tworczosci, aby nie skonczylo sie katastrofa.
+: Istnieje nawet teoria, ze traktujac ciwilizacje jako system zlozone, zbyt duzo zloznosci jest przyczyna is upadku.  http://theatticlight.net/posts/Civilizations-are-complex-systems/
+
+    _ = rand.Int63()
+
+Effect in production:
+
+.code code/panic.txt
+
+* Evolution leads to complexity ?
+
+.image images/the-evolution-of-programming-languages.jpg 500 _
+
+: Gdzie tu jest Go?
+: Im bardziej w prawo tym wiecej zloznosci.
+: Chcialbym wierzyc, ze Go zatrzymalo sie gdzies po srodku.
+
+* Why go exists ?
+
+- more about software engineering, than programming language design
+- eliminate the slowness and clumsiness of software development
+- large programs with large numbers of dependencies, with large teams of programmers
+
+.link https://talks.golang.org/2012/splash.article "Go at Google: Language Design" Rob Pike 
 
 
-Tests with rece detector enabled... ok
+: Moim zdaniem oprocz samej konstrukcji jezyka, wazniejsz jest filozofia kryjaca sie za jezykiem.
+: Potrzebsa matka wynalazku ?
+: Zeby udowodnic przestepstwo nalezy znalezc motyw.
+: Dlaczego uwierzylem w go?
+: To nie interfejsy, to nie wspolbieznosc nie featury jezyka ale ...
 
-Meanwhile in production...
-```
-panic occured 
-```
+* Heard it before
 
-* How to happen
+- Readability is paramount.
+- Clear is better than clever.
 
-evolution on man  image
+.link http://go-proverbs.github.io/ Go-Proverbs 
 
-assembly: DRY
-jmp/ret
+- Readability counts. 
+- Simple is better than complex.
 
-modularity:
-    functions/structures/objects 
-parallel/concurency:
-    processes
-    threads
-    co(go)routines
+.link https://www.python.org/dev/peps/pep-0020/ Zen of Python 
 
-* Make your code more modular (structured design)
+: Naprawde czy juz tego wczesniej nie slyszelismy ?
+: Python3: unicode, bytes, async, yields, ABC, meta classes, literal string interpolatio...n
+: go: 1.0 - 1.7 - 7 zmian w jezyku, glownie sprawiajacy ze jest bardziej restrykcyjny,
+: nie go 2.0, : wymagany return/panic, czasem nie inwazyjny helper
+: Uwierzylem w ta filozofie, dalem sie troche nabrac. Uwierzylem w przeslanki, 
 
-Subroutines
 
-* Concurrency
+* Is go simple?
+
+- "Go does not try to be like the other languages."
+- "Go does not compete on features."
+- "As of Go 1, the language is fixed."
+- "Adding features to Go would not make it better, just bigger."
+
+Rob Pike 
+
+* True reason?
+
+Created for lesser programmers?
+
+"[Programmers] are not capable of understanding a brilliant language ...  So, the language has to be easy for them to understand... "
+
+Rob Pike 
+
+: Jezyk ktory nadaje sie do duzy projetkow i "slabych" programistow - bo zawsze sa tacy
+: slabi programisci: nie glupi, ale leniwi, deadliny, slabe zarzadzanie, feature creepness,
+: Teraz rozumiem, programowanie to czynosc spoleczna czy tego chcemy czy nie :(
+
+* IMHO
+
+Limit the creativity and that's it good thing!
+
+.image images/monkeytesting_0_o.jpg
+
+: Jezyk jest narzedziem.
+: Problemy same w sobie sobie wystarczajac skomplikowane.
+: Po co dodawac sobie wiecej problemow
+: Core complexity vs Accidental complexity
+: Cos z mojej perspektywy.
+
+* Complexity - non computer science perspective
+
+.image images/uno.jpeg 200 _
+
+vs
+
+.image images/ford_focus_2.jpg 200 _
+
+: Focus: Diesel, DPF, turbina dwa razy, egr, pompa paliwa, dwumasa: miesiace spedzone u mechanikow szukajcych przyczyn - katastrofa czeka za rogiem,
+: Fiat: kosztowal mniej niz pierwsza naprawa 5 lat bezawaryjnej jazdy,
+: wymiana zarowki ?
+: Prostota to wlasciwy kierunek.
+: Ale musze przyznac, ze zostalem troche oszukany - ak to sie moglo stac. 
+: Mialem przyjemnosc popracowac nad projektem w go - brak goroutine, brak interfacow - dalo sie 
+: Dalej wierzylem w go.
+
+* Let tell me a story...
+
+* about a project that will fail...
+
+: Wyobrazmy sobie jak moglby rozwijac sie projekt.
+: Glupi programista opentanty prostota i napietnowany koszmarem zloznosci.
+: Zaczyna od czegos co dziala.
+: 5 etapow
+
+* Basic (1/7)
+
+
+.code sc/sc.go /START_BASIC/,/STOP_BASIC/ 
+
+with right question output:
+
+    42
+
+- "Make it work, make it right, make it fast"
+- no functions, no objects
+- Examples: Assembler, Basic
+- Problem: maintenance nightmare
+
+: Wyborazcie sobie, ze jakis programista z last 60 przenisol sie i musial
+: napisac program ktory odpowie na odwieczne pytanie.
+: Prostota w najprostszej formie
+: Jaki problemy z tym rozwiazaniem ?
+: Oczywisce: nie wyborazam sobie utrzymuwania takiego projektu
+
+* Structured (2/7)
+
+.code sc/sc.go /START_STRUCTURED/,/STOP_STRUCTURED/ 
+
+- functions, objects
+- Examples: C, Pascal
+- Problem: slow: just on works on single core
+
+: wyglada lepej, zdecydowanie lepiej
+: moze warto by sie zatrzymac, 
+: ale dziala za wolno,
+
+* Why slow? 
+
+.image images/comparing-different-concurrency-models-on-the-jvm-5-638.jpg
+
+: Wielo rdzeniowe procesory sa powszechne, wniosek:
+: mamy po prostu slabych programistow, czyzby ?
+
+* True history
+
+.image images/programer-vs-buisness.jpeg 400 _
+
+: Historia ktora osobiscie doswiadczylem jako tech lead
+: Biznes: Ile czas potrzebujecie zeby zoptymalizowac dostep do serwisu przy 2 krotnie zwiekszonym ruchu
+: Odpowiedz: Pol roku.
+: Biznes: A ok - to po prostu kupimy wam dwa razy wiecej serwerow i macie miesiac, ok ?
+: Odpowiedz: Eee - chyba nie,  wiecie 9 ciezarnych nie urodzi dziecka w jeden miesiac ? 
+: Biznes: To moze 4 razy wiecej serwerow ?
+: Odpowiedz: Eee - moze byc trudno.
+: Biznes: Ten inzynier jest niekompetenty, dajcie mi innego inzyniera :).
+
+: Musimy miec uzasadania dla kosztu ktore wprowadza programowanie wspolbiezne.
+
+* More cores, more speed ?
+
+Amdhal law
+
+.image images/1thread.jpg
+
+
+* Parallel (3/7)
+
+.code sc/sc.go /START_PARALLEL/,/STOP_PARALLEL/ 
+
+- "structured" parallel model - "explict paralleism"
+- Moore law
+- Examples: mpi/opencl, map/reduce
+- parallel filter/map, recursive, divide and conqure
+
+:troche stucznie dzilmy problem na pol
+
+* Concurrent (4/7)
+
+.code sc/sc.go /START_v0/,/STOP_v0/
+
+* Concurrent (4/7)
+
+.code sc/sc.go /START_CONCURRENT/,/STOP_CONCURRENT/ 
+
+- "concurrency is not parallelism"
+- unstructured parallel model
+- "implicit paralleism"
+- goroutines/greenlets/greenthreads/coroutines
+- M:N threads 
+- actor model
+
+* Collection  (5/7)
+
+.code sc/sc.go /START_COLLECTION/,/STOP_COLLECTION/ 
+
+invocation:
+
+   echo -n "question of life" | go run supercomputer.go 
+
+output:
+
+    42
+
+- problem gets bigger
+- many request
+- partial input
+
+* Final supercomputer v1
+
+.code sc/sc.go /START_FINAL_FUNC_v1/,/STOP_FINAL_FUNC_v1/ 
+
+* Interfaces (6/7)
+
+.code sc/sc.go /START_INTERFACES/,/STOP_INTERFACES/ 
+
+- No io, no fun
+- streamed input
+
+output:
+
+    42
+
+: Bez interakcjie ze swiatem, bez IO, programy nie maja sensu.
+: Ale pojdzmy krok dalej i dodajmy streamed requests.
+
+
+* Final result - works 
+
+.code sc/sc.go /START_FINAL_WORKS/,/STOP_FINAL_WORKS/ 
+
+Problems:
+
+- works most of the time
+- when `os.Stdin` replaced with `os.File`
+
+    question, _ = os.Open("question.txt")
+
+- we leave open file descriptors - resource leak
+
+* Let's fix it
+
+* Final supercomputer v2 
+
+- /s/io.Reader/io.ReadCloser/
+
+.code sc/sc.go /START_FINAL_FUNC_v2/,/STOP_FINAL_FUNC_v2/ 
+
+- resource is properly released when not used
+
+* Final result (7/7) - fails
+
+Better now:
+- you can use `os.Stdin`, `os.File`, `request.Body` as inpute,
+- can run as a service
+
+file input version:
+
+.code sc/sc.go /START_FINAL_FAILS/,/STOP_FINAL_FAILS/ 
+
+web service:
+
+.code sc/sc.go /START_FINAL_SERVER/,/STOP_FINAL_SERVER/
+
+Reality:
+- concurrent requests 
+- unpredicatable load
+
+* Problem?
+
+- `os.Stdin` - data is stolen
+- `os.File` - is read/closed concurrenlty - but shouldn't
+- `request.Body` - nead to be closed after read, every time
+
+* Result "Working fine"
+
+Common sense: 
+- “we have not noticed a problem”
+- “it seems to work just fine so far”
+
+Mathematical sense: 
+- “provably cannot fail”
+
+Computer science is mix of two:
+- Programming as a concept is an abstraction to which mathematical rigor may be applied.
+- Computers, however, are not an abstraction.
+
+What can we do?
+- move from “observably works well” to “provably cannot fail” as your guiding
+rule.
+
+* Other interesting example
+
+Running subprocesses, controlling and reading a output at the same time:
+
+.code file/file.go /^func main/,/^}/
+
+Question: How many objects we have to protect here ?
+
+* Many
+
+    exec.Cmd {
+        Process os.Process
+        ProcessState *os.Process
+        Stderr io.Writer // *os.File
+        Stdout io.Writer // *os.File
+    }
+
+    exec.ExitError {
+        *ProcessState
+        Stderr []byte
+    }
+
+
+Is this really so dangerous:
+
+- [[http://research.swtch.com/gorace]["Off to the Races" Russ Cox]]
+- [[http://blog.stalkr.net/2015/04/golang-data-races-to-break-memory-safety.html][Golang data races to break memory safety]]
+
+
+: Nawet najprostsza rzecz jak uruchomienie pod programu wpedza nas w
+: hierarchie powiazanych obiektow, do ktory dostep nawet w trybie do odczytu 
+: to katastrofa.
+
+* Should I care ?
+
+"There is no bening races"
+"If there is a race, there is no winner!"
+
+.image images/wrong2.jpeg 400 _
+
+* Concurrency problems 1
+
+Deadlocks, Livelocks ...
+
+.image images/deadlock.jpeg 400 _
+
+Not a scope of this talk.
+
+* Concurrency problems 2
+
+Some people, when confronted with a problem, think, "I know, I'll use threads," 
+and then two they hav erpoblesms.
+
+.image images/philosoraptor.png 400 _
+
+* Concurrency problems 3
+
+Memory safety:
+
+- security
+- correctness
+
+.image images/cve_mem_corruption.jpg 400 _
+
+* Is race detector enough ?
+
+- Unit tests ... ok
+- Integration tests ... ok
+- Meanwhile in production... Panic
+
+* Unfortunately NO
+
+- "memory usage may increase by 5-10x and execution time by 2-20x"
+- can only see "detect" when happens - no races, proves nothing
+- usually even integration tests are artificial environment
+- doesn't care about "ownership"
+
+.image images/test-in-production.jpg
+
+* Professional advice 
+
+"This may be a little controversial, but my advice is to avoid, at least initially, the concurrent aspects of Go: channels and goroutines"
+
+Dave Cheney
+
+* Don't use concurrency unless you have no choice.
+
+: "Avoid using concurrency for the sake of using concurrency."
+
+* When is necessary ?
+
+"Do you see a single-stepping world doing one thing at a time?
+Or do you see a complex world of interacting, independently behaving pieces?
+
+That's why. Sequential processing on its own does not model the world's behavior.
+Sometimes you don't have a choice."
+
+Rob Pike
+
+: przyklad z uruchmione procuse zewnetrzengo,
+: komunikacja z asynchronicznym API, kiedy jakes dane sa wpychane
+
+
+* If you must, then how?
+
+* Effective go
+
+"Concurrent programming in many environments is made difficult by the subtleties required to implement correct access to shared variables. Go encourages a different approach in which shared values are passed around on channels and, in fact, never actively shared by separate threads of execution. Only one goroutine has access to the value at any given time. Data races cannot occur, by design. To encourage this way of thinking we have reduced it to a slogan:
+
+Do not communicate by sharing memory; instead, share memory by communicating.
+"
+
+.link https://golang.org/doc/effective_go.html#sharing Effective go
+
+* Don't communicate by sharing memory, share memory by communicating.
+
+tldr; "pass a pointers"
+
+* Pass a pointers - WAT?
+
+- example1: you pass a pointer to file, 
+- exmaple2: openning a process, if you pass a part of it, wait to return,
+treat everything as a whole
+
+this is what, "passing ownership" is about
+
+* but...
 
 "Go enables simple, safe concurrent programming. 
-It doesn't forbid bad programming.
-Caveat: not purely memory safe; sharing is legal. 
+It doesn't forbid bad programming."
+
+"Caveat: not purely memory safe; sharing is legal. 
 Passing a pointer over a channel is idiomatic.
 Experience shows this is practical."
-Russ Cox
 
-https://talks.golang.org/2013/distsys.slide#32
-
-
-* Example for simple iteratore channel based
-
-* Hidden enemy
+.link https://talks.golang.org/2013/distsys.slide#32 Russ Cox
 
 "Design does not need to include "ownership".
-https://talks.golang.org/2015/simplicity-is-complicated.slide#20
 
-* Reference types
-interfaces
-functions
-slices
-maps
+Rob Pike
 
-https://groups.google.com/forum/#!topic/golang-nuts/xQUsmdo6oSs
+.link https://talks.golang.org/2015/simplicity-is-complicated.slide#20 Simplicity is complicated
 
-"Slices, Maps, and Channels are reference types."
+* Is this only solution?
 
-Interfaces values ???
+No.
 
+Synchronization granularity:
 
+- Sequential Program - no concurrency
+- Code locking - global mutable state, accessible from one place
+- Data locking - protect your objects with mutexes
+- Data ownership - pass objects around, take responsibility
 
-* passing a pointer is giving an ownership
-* of what read vs write
-* signle reader 
+.link https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.2011.01.02a.pdf Is Parallel Programming Hard, And, If So, What Can You Do About It?
 
-example with giving a file a closing it,
-openning a process and closed stdin
+* Objects vs Reference 
 
+"Parameters in Go are always passed by value, and a copy of the value being passed is made"
 
-* memory model in golang
-
-https://golang.org/ref/mem
-memory models:
-
-http://www.bailis.org/blog/linearizability-versus-serializability/
-https://aphyr.com/posts/313-strong-consistency-models
+.link http://stackoverflow.com/questions/33995634/are-golang-function-parameter-passed-as-copy-on-write Stackoverflow
 
 
-* rust ownership/references/borrwoing/lifetimes
+Reference types:
 
-http://softwaremaniacs.org/blog/2016/02/12/ownership-borrowing-hard/en/
-https://medium.com/@bugaevc/understanding-rust-ownership-borrowing-lifetimes-ff9ee9f79a9c#.tf40scbe7
-https://chrismorgan.info/blog/rust-ownership-the-hard-way.html
+- slices
+- interfaces
+- maps
+- whatever type that has a pointer 
 
+.link https://groups.google.com/forum/#!topic/golang-nuts/xQUsmdo6oSs "Slices, Maps, and Channels are reference types."
+
+* Be aware!
+
+interfaces:
+
+    var reader io.Reader = os.Stdin // *os.File
+    go foo(reader)
+
+slices:
+    
+    data := []string{"foo", "bar"}
+    go foo(data)
+
+only safe if you pass a copy of "true" immutable structure:
+
+- basic types: `int`, `string`
+- `time.Time`
+- something else ?
+
+* Do I need to use channels ?
+
+Memory model in Go
+
+    a := 0
+    b := 0
+
+    func f() {
+        a = 1
+        b = 2
+    }
+
+    func g() {
+        println(b) 
+        println(a)
+    }
+
+possible output from g():
+    
+    2
+    0
+
+.link https://golang.org/ref/mem Go memory model
+
+* So ?
+
+Can see partial update.
+
+Nothing but synchronization will work.
+
+* Rust
+
+* Rust to solve our problems? 
+
+Memory safety:
+
+- required for proper memory management (no GC)
+- have references types too
+- can statically eliminate race conditions
+
+* Rust idea
+
+Ownership:
+
+- borrowing - give and wait for return
+- move - fire and forget
+- lifetimes - someone needs to defer `Close()`
+
+Notes:
+- move is by default, you change that by "copy" trait
+
+.link https://doc.rust-lang.org/1.2.0/book/references-and-borrowing.html Rust Book 
+
+: Jak to zrobili w rust, ze dziala
+: borrowing - pozyczanie - jesli przekazujesz komus referencje do zlozonego obiektu, tracisz prawo operowania na nim
+: move - mozesz tez przekaza kompletnie odpowiedzialnosc do funkcji ktora
+: lifetimes - jaki w relacji do wolajacego jest cykl zycia parametrow, ktore przekazujemy do funkcji
+: Innymi slowy, brak GC, wymaga znajmosci cykla zycia obiektow ktore
+: powolujemy do zycia, przy okazji gratis, moze to wyeliminowac wyscigi
+
+* Is Rust better than Go ?
+
+- This checks happen statically at compile time - that is great!
+- but...
+
+* Rust - concurrency
+
+No. :)
+
+"Concurrency in Rust is straightforward: you get a choice between OS threads, OS threads, and OS threads. 
+
+
+When Rust was originally announced, the team had ambitions to pursue the multi-core MacGuffin with a green-threaded actor model, but they found out that it’s very hard to do green threads with native code compilation"
+
+
+.link http://www.evanmiller.org/a-taste-of-rust.html 
+
+* Bonus: Go "nocopy" go vet proposal
+
+    type Mutex struct {
+        nocopy
+        state int32
+        sema  uint32
+    }
+
+Unfortunately rejected by Rob Pike
+
+"I lived through the lint era. We do not want to go back there; it was a soggy mess."
+
+Russ Cox solution:
+
+    type noCopy struct{}
+    func (*noCopy) Lock() {}
+
+.link https://github.com/golang/go/issues/8005#issuecomment-190631243 Issue
+
+* Complicated - yes it is !
+
+Where is our simplicity ?
+
+.image images/song-about-betrayal-600x550.jpg
+
+: Znow z wlasnego doswiadczenia - mozna uzywac go bez wspolbieznosci - przez
+: ponad rok pracowalem na takie projektem - da sie!
+
+* Hard part - Sequential Consistency
+
+Sequential consistency means that all threads agree on the order in which memory operations occurred order is consistent with the order of operations in the program source code.
+
+But with Go we have: Relaxed memory model.
+
+* Lock-free code
+
+"[Lock-free code is] hard even for experts."
+
+"It’s easy to write lock-free code that appears to work, but it’s very
+difficult to write lock-free code that is correct and performs well."
+
+"Even good magazines and refereed journals have published a substantial amount
+of lock-free code that was actually broken in subtle ways and needed
+correction"
+
+.link http://www.drdobbs.com/cpp/lock-free-code-a-false-sense-of-security/210600279 Lock-Free Code: A False Sense of Security
+
+* Last words 
+
+- Accept concurreny is hard 
+- If you can: don't use
+- or learn, embrace and "Don't panic" (on production)
+- be safe !
+
+.image images/dont-panic-bw.png
+
+* "Boring is beautiful"
+
+.image images/simplicity-1-728.jpg
+
+* Links
+
+.link http://parallelbook.com/sites/parallelbook.com/files/SC13_20131117_Intel_McCool_Robison_Reinders_Hebenstreit.pdf Structured Parallel Programming with Patterns
+.link http://preshing.com/20120612/an-introduction-to-lock-free-programming/ Lock Free Programming
+.link http://www.bailis.org/blog/linearizability-versus-serializability/ "Linearizability versus Serializability"
+.link https://aphyr.com/posts/313-strong-consistency-models "Strong consistency models"
+.link http://softwaremaniacs.org/blog/2016/02/12/ownership-borrowing-hard/en/ "Ownership borrowing hard"
+.link https://medium.com/@bugaevc/understanding-rust-ownership-borrowing-lifetimes-ff9ee9f79a9c#.tf40scbe7 "Understanding borrowing and lifetimes"
+.link https://chrismorgan.info/blog/rust-ownership-the-hard-way.html

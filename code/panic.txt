@@ -1,0 +1,6 @@
+panic: runtime error: index out of range
+
+goroutine 28 [running]:
+panic(0x996e0, 0x42014a0f0)
+        /usr/local/go/1.7.3/libexec/src/runtime/panic.go:500 +0x1a1
+math/rand.(*Rand).Int63(0x4201ae0e0, 0x3ce66a9a9d792a5f)
