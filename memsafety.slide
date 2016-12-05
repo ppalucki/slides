@@ -65,11 +65,19 @@ pawel.palucki@gmail.com
 
 .link http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf How Complex Systems Fail. 
 
+
+* In production:
+
+simple code like this:
+
     _ = rand.Int63()
 
-Effect in production:
+output
 
 .code code/panic.txt
+
+- sometimes
+- evening or weekends
 
 : Tym sie kieruje, ale ciezko utrzymac sie w ryzach.
 : Ta prezentacja i present tool - mialo byc kilka slidow, jest pelno obrazkow i interaktywny kod
