@@ -555,6 +555,23 @@ Reference types:
 
 .link https://groups.google.com/forum/#!topic/golang-nuts/xQUsmdo6oSs "Slices, Maps, and Channels are reference types."
 
+* pass by copy vs reference types
+
+.code slices/slices.go /START/,/STOP/
+
+output:
+    
+    [42]
+    [-1]
+
+why:
+    
+    type slice struct {
+        array unsafe.Pointer
+        len   int
+        cap   int
+    }
+
 * Be aware!
 
 interfaces:
