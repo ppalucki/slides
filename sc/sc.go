@@ -126,7 +126,7 @@ func collection() {
 }
 
 // START_FINAL_FUNC_v1 OMIT
-func supercomputer_v1(question io.Reader, answer io.Writer) {
+func supercomputerInterfaces(question io.Reader, answer io.Writer) {
 	realQuestion, _ := ioutil.ReadAll(question)
 	if string(realQuestion) != "question of life" {
 		io.WriteString(answer, "failure")
@@ -141,23 +141,23 @@ func supercomputer_v1(question io.Reader, answer io.Writer) {
 // no io, no fun
 func interfaces() {
 	// START_INTERFACES OMIT
-	supercomputer_v1(os.Stdin, os.Stderr)
+	supercomputerInterfaces(os.Stdin, os.Stderr)
 	// STOP_INTERFACES OMIT
 }
 
 // and real io concurrency and abstractions
-func final_works() {
+func finalWorks() {
 	// START_FINAL_WORKS OMIT
 	question := os.Stdin
 	answer := os.Stderr
-	go supercomputer_v1(question, answer)
-	go supercomputer_v1(question, answer)
+	go supercomputerInterfaces(question, answer)
+	go supercomputerInterfaces(question, answer)
 	// STOP_FINAL_WORKS OMIT
 	time.Sleep(1 * time.Second)
 }
 
 // START_FINAL_FUNC_v2 OMIT
-func supercomputer_v2(question io.ReadCloser, answer io.Writer) {
+func supercomputerInterfacesFixed(question io.ReadCloser, answer io.Writer) {
 	realQuestion, _ := ioutil.ReadAll(question)
 	defer question.Close() // HL
 	if string(realQuestion) != "question of life" {
@@ -170,36 +170,36 @@ func supercomputer_v2(question io.ReadCloser, answer io.Writer) {
 // STOP_FINAL_FUNC_v2 OMIT
 
 // but in production
-func final_fails() {
+func finalFails() {
 	// START_FINAL_FAILS OMIT
 	question, _ := os.Open("question.txt")
-	go supercomputer_v2(question, os.Stderr)
-	go supercomputer_v2(question, os.Stderr)
+	go supercomputerInterfacesFixed(question, os.Stderr)
+	go supercomputerInterfacesFixed(question, os.Stderr)
 	// STOP_FINAL_FAILS OMIT
 	time.Sleep(1 * time.Second)
 }
 
-func final_server() {
+func finalServer() {
 	// START_FINAL_SERVER  OMIT
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		supercomputer_v2(r.Body, w)
+		supercomputerInterfacesFixed(r.Body, w)
 	})
 	http.ListenAndServe(":8080", nil)
 	// STOP_FINAL_SERVER  OMIT
 }
 
 func main() {
-	// basic()
-	// structured()
-	// parallel()
-	// concurrent()
-	// collection()
-	// interfaces()
-	final_works()
-	// final_fails()
-	// for i := 0; i < 10; i++ {
-	// 	final_fails()
-	// 	fmt.Println("")
-	// }
-	// final_server()
+	basic()
+	structured()
+	parallel()
+	concurrent()
+	collection()
+	interfaces()
+	finalWorks()
+	finalFails()
+	for i := 0; i < 10; i++ {
+		finalFails()
+		fmt.Println("")
+	}
+	finalServer()
 }
