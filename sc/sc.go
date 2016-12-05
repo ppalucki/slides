@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-func basic() {
-	// START_BASIC OMIT
+// START_BASIC OMIT
+func main_() {
 	question := "question of life"
 	if question != "question of life" { // jne
 		goto FAILURE
@@ -21,8 +21,9 @@ func basic() {
 FAILURE:
 	fmt.Println("failure")
 DONE:
-	// STOP_BASIC OMIT
 }
+
+// STOP_BASIC OMIT
 
 // START_FUNC_STRUCTURED OMIT
 func supercomputerStructured(question string) string {
@@ -74,14 +75,14 @@ func parallel() {
 }
 
 // START_v0 OMIT
-func supercomputer_v0(question, answer chan string) {
-	switch <-question {
+func supercomputerConcurrent(question, answer chan string) {
+	switch <-question { // HL
 	case "question o":
-		answer <- "4"
+		answer <- "4" // HL
 	case "f life":
-		answer <- "2"
+		answer <- "2" // HL
 	default:
-		answer <- "failure"
+		answer <- "failure" // HL
 	}
 }
 
@@ -91,8 +92,8 @@ func concurrent() {
 	// START_CONCURRENT OMIT
 	question := make(chan string)
 	answers := make(chan string)
-	go supercomputer_v0(question, answers)
-	go supercomputer_v0(question, answers)
+	go supercomputerConcurrent(question, answers) // HL
+	go supercomputerConcurrent(question, answers) // HL
 	question <- "question o"
 	question <- "f life"
 	answer := <-answers + <-answers
@@ -148,7 +149,7 @@ func interfaces() {
 // and real io concurrency and abstractions
 func finalWorks() {
 	// START_FINAL_WORKS OMIT
-	question := os.Stdin
+	question := os.Stdin // HL
 	answer := os.Stderr
 	go supercomputerInterfaces(question, answer)
 	go supercomputerInterfaces(question, answer)
@@ -172,9 +173,10 @@ func supercomputerInterfacesFixed(question io.ReadCloser, answer io.Writer) {
 // but in production
 func finalFails() {
 	// START_FINAL_FAILS OMIT
-	question, _ := os.Open("question.txt")
-	go supercomputerInterfacesFixed(question, os.Stderr)
-	go supercomputerInterfacesFixed(question, os.Stderr)
+	question, _ := os.Open("question.txt") // HL
+	answer := os.Stderr
+	go supercomputerInterfacesFixed(question, answer)
+	go supercomputerInterfacesFixed(question, answer)
 	// STOP_FINAL_FAILS OMIT
 	time.Sleep(1 * time.Second)
 }
@@ -189,7 +191,7 @@ func finalServer() {
 }
 
 func main() {
-	basic()
+	main_()
 	structured()
 	parallel()
 	concurrent()

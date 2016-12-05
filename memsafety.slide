@@ -31,18 +31,17 @@ pawel.palucki@gmail.com
 * About me
 
 - ~10 years professional programmer
-: Uzalezniony ;)
 - Java -> Python -> Ruby(Rails) -> Go
-: Perfekcyjny kandydat wg. googla :)
 - Enterprise -> WebDeveloper -> Backend -> Engineer
 
+: Uzalezniony 
+: Perfekcyjny kandydat wg. googla 
 : Prezentacja 
 : - Always behind the scene and on the edge
 : Krotko o mnie, 10 lat w branzy, zaczynalem w enterprise Java/Oracle dla ksiegowych + administrator,
 : Nastepnie web/backend developer social networking, przewaznie django ale praktycznie bez prezentacji ipla, nastepnie dwa lata, railsy (nie ruby) :),
 : Przez caly ten czas, zazwyczaj wieczorami lub w weekendy devops i admin naprawiajcy wszystko co napisalem nichlujnie w dzien. 
 : Najlepiej uczyc sie na bledach, niestety moglem duzo sie uczyc - gdy zostalem tech leadem - po 2 latach nie dalem rady i ucieklem do trojmiasto i teraz
-
 : O mommentu gdy przyszedlem Intelu, czas probuje odpowiedziec na pytania co poszlo nie tak, ze nie  moglem pracowac patrzec na twor w ktory wlozylem tyle serca,
 : Moze to ja zawiodlem, moze to jezyk, moze to ludzie.
 : Nadazyla sie okazja, trafilem do intela, do OpenStacka i po pol roku wiedzielame, ze to nie ja :)
@@ -57,12 +56,6 @@ pawel.palucki@gmail.com
 - Simplicity is the ultimate sophistication
 - Simplicity is not simple: hard to design, hard to build - easy to use?
 
-: jakim zasadamy kieruje sie tworzac nowe rzeczy - zazwyczaj oprogrwamowanie,
-: Osiagniecie i chwala dla tego, ktory wprowadzajac nowa funkcjolanosci, zredukje zlonosci, zazwyczaj ilosc kodu, lepiej skompliwkowanie
-: troche o byciu lewniwym,
-: robic mniej,
-: nigdy nie chwal sie ilosc kodu,
-: wcale nie takie proste jak sie wydaje,
 
 * Complexity is dangerous
 
@@ -72,16 +65,17 @@ pawel.palucki@gmail.com
 
 .link http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf How Complex Systems Fail. 
 
-: Tym sie kieruje, ale ciezko utrzymac sie w ryzach.
-: Ta prezentacja i present tool - mialo byc kilka slidow, jest pelno obrazkow i interaktywny kod
-: Jak powstrzymac glod tworczosci, aby nie skonczylo sie katastrofa.
-: Istnieje nawet teoria, ze traktujac ciwilizacje jako system zlozone, zbyt duzo zloznosci jest przyczyna is upadku.  http://theatticlight.net/posts/Civilizations-are-complex-systems/
-
     _ = rand.Int63()
 
 Effect in production:
 
 .code code/panic.txt
+
+: Tym sie kieruje, ale ciezko utrzymac sie w ryzach.
+: Ta prezentacja i present tool - mialo byc kilka slidow, jest pelno obrazkow i interaktywny kod
+: Jak powstrzymac glod tworczosci, aby nie skonczylo sie katastrofa.
+: Istnieje nawet teoria, ze traktujac ciwilizacje jako system zlozone, zbyt duzo zloznosci jest przyczyna is upadku.  http://theatticlight.net/posts/Civilizations-are-complex-systems/
+
 
 * Evolution leads to complexity ?
 
@@ -183,15 +177,14 @@ vs
 : Zaczyna od czegos co dziala.
 : 5 etapow
 
-
+* Goal: answer to ultimate question
 
 * Basic (1/7)
 
-Goal: answer to ultimate question
 
 .code sc/sc.go /START_BASIC/,/STOP_BASIC/ 
 
-with right question output:
+with right question, output is:
 
     42
 
@@ -216,7 +209,7 @@ with right question output:
 
 - functions, objects
 - Examples: C, Pascal
-- Problem: slow: just on works on single core
+- Problem: slow - just works on single core
 
 : wyglada lepej, zdecydowanie lepiej
 : moze warto by sie zatrzymac, 
@@ -254,6 +247,8 @@ Amdhal law
 
 .code sc/sc.go /START_FUNC_PARALLEL/,/STOP_FUNC_PARALLEL/ 
 
+- parallel filter/map, recursive, divide and conqure
+
 * Parallel (3/7) - invocation
 
 .code sc/sc.go /START_PARALLEL/,/STOP_PARALLEL/ 
@@ -261,8 +256,6 @@ Amdhal law
 - "structured" parallel model - "explict paralleism"
 - Moore law
 - Examples: mpi/opencl, map/reduce
-- parallel filter/map, recursive, divide and conqure
-
 
 * Concurrent (4/7) - function
 
@@ -277,8 +270,6 @@ Amdhal law
 - "implicit paralleism"
 - goroutines/greenlets/greenthreads/coroutines
 - M:N threads 
-
-: - actor model
 
 * Collection (5/7) - function
 
@@ -296,24 +287,26 @@ output:
 
     42
 
+- No io, no fun
 - problem gets bigger
 - many request
 - partial input
 
-* Final supercomputer v1
+* Interfaces (6/7) - function
 
 .code sc/sc.go /START_FINAL_FUNC_v1/,/STOP_FINAL_FUNC_v1/ 
 
-* Interfaces (6/7)
+* Interfaces (6/7) - invocation
 
 .code sc/sc.go /START_INTERFACES/,/STOP_INTERFACES/ 
 
-- No io, no fun
-- streamed input
 
 output:
 
     42
+
+- streamed input
+- Problem: 
 
 : Bez interakcjie ze swiatem, bez IO, programy nie maja sensu.
 : Ale pojdzmy krok dalej i dodajmy streamed requests.
