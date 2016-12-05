@@ -183,8 +183,11 @@ vs
 : Zaczyna od czegos co dziala.
 : 5 etapow
 
+
+
 * Basic (1/7)
 
+Goal: answer to ultimate question
 
 .code sc/sc.go /START_BASIC/,/STOP_BASIC/ 
 
@@ -203,7 +206,11 @@ with right question output:
 : Jaki problemy z tym rozwiazaniem ?
 : Oczywisce: nie wyborazam sobie utrzymuwania takiego projektu
 
-* Structured (2/7)
+* Structured (2/7) - function
+
+.code sc/sc.go /START_FUNC_STRUCTURED/,/STOP_FUNC_STRUCTURED/ 
+
+* Structured (2/7) - invocation
 
 .code sc/sc.go /START_STRUCTURED/,/STOP_STRUCTURED/ 
 
@@ -243,8 +250,11 @@ Amdhal law
 
 .image images/1thread.jpg
 
+* Parallel (3/7) - function
 
-* Parallel (3/7)
+.code sc/sc.go /START_FUNC_PARALLEL/,/STOP_FUNC_PARALLEL/ 
+
+* Parallel (3/7) - invocation
 
 .code sc/sc.go /START_PARALLEL/,/STOP_PARALLEL/ 
 
@@ -253,13 +263,12 @@ Amdhal law
 - Examples: mpi/opencl, map/reduce
 - parallel filter/map, recursive, divide and conqure
 
-:troche stucznie dzilmy problem na pol
 
-* Concurrent (4/7)
+* Concurrent (4/7) - function
 
 .code sc/sc.go /START_v0/,/STOP_v0/
 
-* Concurrent (4/7)
+* Concurrent (4/7) - invocation
 
 .code sc/sc.go /START_CONCURRENT/,/STOP_CONCURRENT/ 
 
@@ -268,9 +277,14 @@ Amdhal law
 - "implicit paralleism"
 - goroutines/greenlets/greenthreads/coroutines
 - M:N threads 
-- actor model
 
-* Collection  (5/7)
+: - actor model
+
+* Collection (5/7) - function
+
+.code sc/sc.go /START_FUNC_COLLECTION/,/STOP_FUNC_COLLECTION/ 
+
+* Collection  (5/7) - invocation
 
 .code sc/sc.go /START_COLLECTION/,/STOP_COLLECTION/ 
 

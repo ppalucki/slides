@@ -24,44 +24,50 @@ DONE:
 	// STOP_BASIC OMIT
 }
 
+// START_FUNC_STRUCTURED OMIT
+func supercomputerStructured(question string) string {
+	if question != "question of life" {
+		return "failure"
+	}
+	return "42"
+}
+
+// STOP_FUNC_STRUCTURED OMIT
+
 // pascal/c
 // structured programming
 func structured() {
-
 	// START_STRUCTURED OMIT
-	supercomputer := func(question string) string {
-		if question != "question of life" {
-			return "failure"
-		}
-		return "42"
-	}
-
-	answer := supercomputer("question of life")
+	answer := supercomputerStructured("question of life")
 	fmt.Println(answer)
 	// STOP_STRUCTURED OMIT
 }
+
+// START_FUNC_PARALLEL OMIT
+func supercomputerParallel(question string) string {
+	switch question {
+	case "question o":
+		return "4"
+	case "f life":
+		return "2"
+	default:
+		return "failure"
+	}
+}
+
+// STOP_FUNC_PARALLEL OMIT
 
 // structured parallel programinng
 // exameples: mpi/opencl, map/reduce
 // expclict parallelism
 // multicore Moore law
 func parallel() {
-
 	// START_PARALLEL OMIT
-	supercomputer := func(question string) string {
-		switch question {
-		case "question o":
-			return "4"
-		case "f life":
-			return "2"
-		default:
-			return "failure"
-		}
-	}
+
 	answers := []string{}
 	// map and some magic incantation to make it parallel
 	for _, questionPart := range []string{"question o", "f life"} {
-		answers = append(answers, supercomputer(questionPart))
+		answers = append(answers, supercomputerParallel(questionPart))
 	}
 	fmt.Println(strings.Join(answers, "")) // reduce
 	// STOP_PARALLEL OMIT
@@ -95,6 +101,16 @@ func concurrent() {
 	// STOP_CONCURRENT OMIT
 }
 
+// START_FUNC_COLLECTION OMIT
+func supercomputerCollection(question []byte) byte {
+	if string(question) != "question of life" {
+		return 22 /* EINVAL */
+	}
+	return 42
+}
+
+// STOP_FUNC_COLLECTION OMIT
+
 // io
 // no io, no fun
 // (you can as well program in pure functionall langugue or math)
@@ -103,14 +119,8 @@ func collection() {
 
 	// not io.Reader, not streamed
 	// START_COLLECTION OMIT
-	supercomputer := func(question []byte) byte {
-		if string(question) != "question of life" {
-			return 22 /* EINVAL */
-		}
-		return 42
-	}
 	question, _ := ioutil.ReadAll(os.Stdin)
-	answer := supercomputer(question)
+	answer := supercomputerCollection(question)
 	fmt.Println(answer)
 	// STOP_COLLECTION OMIT
 }
